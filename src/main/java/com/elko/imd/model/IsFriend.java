@@ -22,6 +22,9 @@ public class IsFriend {
         this.friend = friend;
     }
 
+    public boolean isEmpty(){
+    return friend == null;
+    }  
     
     
      

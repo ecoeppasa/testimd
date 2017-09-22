@@ -9,6 +9,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
@@ -19,6 +21,7 @@ import javax.persistence.Table;
 public class User {
     
     @Id
+    @NotBlank(message = "Email cannot be empty")
     @Column(name = "email")
     private String email;
     
@@ -31,6 +34,8 @@ public class User {
         this.email = email;
     }
 
-    
+    public boolean isEmpty(){        
+        return email == null;
+    }
     
 }

@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author elko
  */
-public class GetFriend {
+public class GetFriend { 
     
     private boolean success;
     private List<String> friends;

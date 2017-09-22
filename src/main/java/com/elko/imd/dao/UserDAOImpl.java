@@ -6,6 +6,7 @@
 package com.elko.imd.dao;
 
 import com.elko.imd.model.Friendship;
+import com.elko.imd.model.GetFriend;
 import com.elko.imd.model.User;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,12 +46,22 @@ public class UserDAOImpl implements UserDAO{
     }
 
     @Override
-    public List<User> getFriend(String user) {
-   Session session;
+    public List<Friendship> getFriend(String user) {
+       Session session;
        session = sessionFactory.openSession();
-       List<User> friend = new ArrayList<>();
+       List<Friendship> friend = new ArrayList<>();
        friend = session.createQuery("from Friendship where (userOne=? or userTwo=?) and status=2  ").setParameter(0, user).setParameter(1, user).list();
        return friend;
+    }
+
+    @Override
+    public List<Friendship> getCommonFriend(String user) {
+       Session session;
+       session = sessionFactory.openSession();
+       List<Friendship> friend = new ArrayList<>();
+           friend = session.createQuery("from Friendship where (userOne=? or userTwo=?) and status=2  ").setParameter(0, user).
+               setParameter(1, user).list();
+       return friend; 
     }
     
 }

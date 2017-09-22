@@ -5,6 +5,8 @@
  */
 package com.elko.imd.dao;
 
+import com.elko.imd.model.Friendship;
+import com.elko.imd.model.GetFriend;
 import com.elko.imd.model.User;
 import java.util.List;
 
@@ -14,5 +16,6 @@ import java.util.List;
  */
 public interface UserDAO {
     public List<User> IsFriend(String userOne,String userTwo) ;
-    public List<User> getFriend(String user) ;
+    public List<Friendship> getFriend(String user) ;
+    public List<Friendship> getCommonFriend(String user) ;
 }
