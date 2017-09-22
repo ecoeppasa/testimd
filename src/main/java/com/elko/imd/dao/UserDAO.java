@@ -14,4 +14,5 @@ import java.util.List;
  */
 public interface UserDAO {
     public List<User> IsFriend(String userOne,String userTwo) ;
+    public List<User> getFriend(String user) ;
 }

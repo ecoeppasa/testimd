@@ -36,12 +36,21 @@ public class UserDAOImpl implements UserDAO{
        User n = new User();       
        List<User> user = new ArrayList<User>();
         if (!friend.isEmpty()){
-       u.setEmail(userOne);
-       n.setEmail(userTwo);
-       user.add(u);
-       user.add(n);
+            u.setEmail(userOne);
+            n.setEmail(userTwo);
+            user.add(u);
+            user.add(n);
        }
        return user;
+    }
+
+    @Override
+    public List<User> getFriend(String user) {
+   Session session;
+       session = sessionFactory.openSession();
+       List<User> friend = new ArrayList<>();
+       friend = session.createQuery("from Friendship where (userOne=? or userTwo=?) and status=2  ").setParameter(0, user).setParameter(1, user).list();
+       return friend;
     }
     
 }

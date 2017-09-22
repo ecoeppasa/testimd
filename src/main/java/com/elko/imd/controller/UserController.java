@@ -6,6 +6,7 @@
 package com.elko.imd.controller;
 
 import com.elko.imd.dao.UserDAO;
+import com.elko.imd.handler.Validator;
 import com.elko.imd.model.Friendship;
 import com.elko.imd.model.IsFriend;
 import com.elko.imd.model.IsFriendMessage;
@@ -41,28 +42,28 @@ public class UserController {
      UserDAO userDAO;
     
     
-    //-------------------Retrieve All--------------------------------------------------------
-	
+     Validator validator;
+    
+    //-------------------Check is users are friend--------------------------------------------------------
         @PostMapping(value = "/isfriend/")
 	public ResponseEntity<Map >listAllUsers(HttpServletRequest httpServletRequest , @RequestBody String json) {
-              
+                validator = new Validator();
+                Map<String,String> messageError = new HashMap<>();   
+                if (!validator.isJSONValid(json)) {
+                  messageError.put("Error Message", "Invalid JSon Format!");                
+                  return new ResponseEntity<Map>(messageError, HttpStatus.BAD_REQUEST);
+                }
+            
                 IsFriend friends = new Gson().fromJson(json, IsFriend.class);
                 List<User> list = userDAO.IsFriend(friends.getFriend().get(0).toString(),friends.getFriend().get(1).toString());
-                Map<String,Boolean> message = new HashMap<>();
+                Map<String,Boolean> message = new HashMap<>();   
+              
                 message.put("Succes", Boolean.TRUE);
                 if(list.isEmpty()){
-                message.put("Succes", Boolean.FALSE);
+                    message.put("Succes", Boolean.FALSE);
 	        }
                 
 	       return new ResponseEntity<Map>(message, HttpStatus.OK);
 	}
         
-      
-        
-        @GetMapping("/halo/")
-        public String halo(){            
-            return "halo teman";
-        }
-    
-    
 }
