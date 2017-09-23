@@ -240,13 +240,15 @@ public class UserController {
                     if (!object.getUserTwo().equals(newsFeed.getSender()))    
                     mentioned.add(object.getUserTwo());                    
                  }
-                System.out.println("1");
                 List<Subscribe> u = userDAO.getSubscribe(newsFeed.getSender());
-                System.out.println("2");
                 for (Subscribe us : u){
                     mentioned.add(us.getRequestor());
                 }
-                System.out.println("3");
+                List<Subscribe> un = userDAO.getUnSubscribe(newsFeed.getSender());
+                for (Subscribe usc : un){
+                    mentioned.remove(usc.getRequestor());                    
+                    mentioned.remove(usc.getTarget());
+                }
                 Set<String> set = new HashSet<>();
                 set.addAll(mentioned);
                 nr.setSuccess(true);

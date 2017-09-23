@@ -100,5 +100,15 @@ public class UserDAOImpl implements UserDAO{
         }
        return true;
     }
+
+    @Override
+    public List<Subscribe> getUnSubscribe(String email) {
+         Session session;
+       session = sessionFactory.openSession();
+       List<Subscribe> subscr = new ArrayList<>();
+       subscr = session.createQuery("from Subscribe where (target=? or requestor=?) and status=0  ").setParameter(0, email).setParameter(1, email).list();
+       
+       return subscr;
+    }
     
 }

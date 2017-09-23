@@ -28,5 +28,6 @@ public interface UserDAO {
     public List<Friendship> getFriend(@Email(message = "use email format") String user) ;
     public boolean subscribe(@Valid UserAction userAction,int status);
     public List<Subscribe> getSubscribe (@Email(message = "use email format") String email);
+    public List<Subscribe> getUnSubscribe (@Email(message = "use email format") String email);
     public boolean postNews (@Valid NewsFeed newsFeed);
 }
