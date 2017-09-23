@@ -10,7 +10,11 @@ import com.elko.imd.handler.Validator;
 import com.elko.imd.model.Friendship;
 import com.elko.imd.model.GetFriend;
 import com.elko.imd.model.IsFriend;
+import com.elko.imd.model.NewsFeed;
+import com.elko.imd.model.NewsRecipient;
+import com.elko.imd.model.Subscribe;
 import com.elko.imd.model.User;
+import com.elko.imd.model.UserAction;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.util.ArrayList;
@@ -19,11 +23,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +42,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api")
+@Validated
 public class UserController {
     private Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
     
@@ -152,8 +160,7 @@ public class UserController {
                       }
                           
                      }
-                System.out.println(friend.size()+"<-- size");
-              
+               
                 if(friend.size()==1){
                     friends.setCount(0);
                     friends.setFriends(lString);
@@ -168,8 +175,7 @@ public class UserController {
                      
                                set.add(friend.get(i).get(j).getUserOne());
                                 set.add(friend.get(i).get(j).getUserTwo());
-                     //       System.out.println("lstr :"+i+"-"+j+" : "+friend.get(i).get(j).getUserOne()+" "+friend.get(i).get(j).getUserTwo());
-                        
+                         
                     }
                 }                
                 lString.addAll(set);
@@ -182,5 +188,73 @@ public class UserController {
                 
 	       return new ResponseEntity<GetFriend>(friends, HttpStatus.OK);
 	}
+        
+        @PostMapping(value = "/subscribe/")
+        public ResponseEntity<Map> subscribe(HttpServletRequest httpServletRequest , @RequestBody String json){
+
+            UserAction obj = gson.fromJson(json,UserAction.class);
+            Map<String,Boolean> message = new HashMap<>();   
+             message.put("success", false);   
+            if( userDAO.subscribe(obj,1)){
+                message.clear();
+                message.put("success", true);
+            }
+
+            return new ResponseEntity<Map>(message, HttpStatus.OK);
+
+        }
+        
+        @PostMapping(value = "/unsubscribe/")
+        public ResponseEntity<Map> unsubscribe(HttpServletRequest httpServletRequest , @RequestBody String json){
+
+            UserAction obj = gson.fromJson(json,UserAction.class);
+            Map<String,Boolean> message = new HashMap<>();   
+             message.put("success", false);   
+            if( userDAO.subscribe(obj,0)){
+                message.clear();
+                message.put("success", true);
+            }
+
+            return new ResponseEntity<Map>(message, HttpStatus.OK);
+
+        }
+        
+        @PostMapping(value = "/newsposting/")
+        public ResponseEntity<NewsRecipient> newsposting(HttpServletRequest httpServletRequest , @RequestBody String json){
+
+            NewsFeed newsFeed = gson.fromJson(json,NewsFeed.class);
+            NewsRecipient nr =new NewsRecipient();
+            nr.setSuccess(false);
+            List<String> mentioned = new ArrayList<String>();
+            String text = newsFeed.getText();
+            Matcher m = Pattern.compile("[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+").matcher(text);
+            
+            if( userDAO.postNews(newsFeed)){
+                while (m.find()) {
+                 mentioned.add(m.group());
+                }
+                 List<Friendship> fs = userDAO.getFriend(newsFeed.getSender());
+                for (Friendship object : fs) {
+                    if (!object.getUserOne().equals(newsFeed.getSender()))
+                    mentioned.add(object.getUserOne());                
+                    if (!object.getUserTwo().equals(newsFeed.getSender()))    
+                    mentioned.add(object.getUserTwo());                    
+                 }
+                System.out.println("1");
+                List<Subscribe> u = userDAO.getSubscribe(newsFeed.getSender());
+                System.out.println("2");
+                for (Subscribe us : u){
+                    mentioned.add(us.getRequestor());
+                }
+                System.out.println("3");
+                Set<String> set = new HashSet<>();
+                set.addAll(mentioned);
+                nr.setSuccess(true);
+                nr.setRecipients(set);
+            }
+
+            return new ResponseEntity<NewsRecipient>(nr, HttpStatus.OK);
+
+        }
     
 }

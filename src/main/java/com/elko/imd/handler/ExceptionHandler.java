@@ -5,6 +5,8 @@
  */
 package com.elko.imd.handler;
 
+import com.google.gson.JsonParseException;
+import javax.validation.ConstraintViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +24,7 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler{
     protected ResponseEntity handleGeneral(
       Exception ex, WebRequest request) {
         return handleExceptionInternal(ex, ex.toString(), 
-          new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+          new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
     
     @org.springframework.web.bind.annotation.ExceptionHandler({NullPointerException.class})
@@ -32,5 +34,18 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler{
           new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
     
+    @org.springframework.web.bind.annotation.ExceptionHandler({JsonParseException.class})
+    protected ResponseEntity handleGSon(
+      Exception ex, WebRequest request) {
+        return handleExceptionInternal(ex, "Error JSON Format!, Please Check again! ", 
+          new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+    
+    @org.springframework.web.bind.annotation.ExceptionHandler({ConstraintViolationException.class})
+    protected ResponseEntity handleValidation(
+      Exception ex, WebRequest request) {
+        return handleExceptionInternal(ex, "Error validator, Please Check your data! such as email format and field cannot be empty", 
+          new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
     
 }
