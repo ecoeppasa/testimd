@@ -63,12 +63,12 @@ public class UserController {
                 }
             
                 IsFriend friends = new Gson().fromJson(json, IsFriend.class);
-                List<User> list = userDAO.IsFriend(friends.getFriend().get(0).toString(),friends.getFriend().get(1).toString());
+                List<User> list = userDAO.IsFriend(friends.getFriends().get(0).toString(),friends.getFriends().get(1).toString());
                 Map<String,Boolean> message = new HashMap<>();   
               
-                message.put("Succes", Boolean.TRUE);
+                message.put("succes", Boolean.TRUE);
                 if(list.isEmpty()){
-                    message.put("Succes", Boolean.FALSE);
+                    message.put("succes", Boolean.FALSE);
 	        }
                 
 	       return new ResponseEntity<Map>(message, HttpStatus.OK);
@@ -143,7 +143,7 @@ public class UserController {
                
                  List<String> lString = new ArrayList<>();
                 
-                 if(isFriend.isEmpty() || isFriend.getFriend() == null){
+                 if(isFriend.isEmpty() || isFriend.getFriends()== null){
                     friends.setCount(0);
                     friends.setFriends(lString);
                     friends.setSuccess(false);
@@ -153,7 +153,7 @@ public class UserController {
                  
                 List<List<Friendship>> friend = new ArrayList<List<Friendship>>();                 
                 List<Friendship> fs = null;
-                for (String s : isFriend.getFriend()){
+                for (String s : isFriend.getFriends()){
                           fs = userDAO.getFriend(s);
                           if (!fs.isEmpty()){
                           friend.add(fs);
@@ -179,7 +179,7 @@ public class UserController {
                     }
                 }                
                 lString.addAll(set);
-                for(String f : isFriend.getFriend()){
+                for(String f : isFriend.getFriends()){
                     lString.remove(f);
                 }
                 friends.setCount(lString.size());

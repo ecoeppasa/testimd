@@ -24,6 +24,7 @@ public class User {
     @Id
     @NotEmpty(message = "Email cannot be empty")
     @Column(name = "email")
+    @Email
     private String email;
     
     

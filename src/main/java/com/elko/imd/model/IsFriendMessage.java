@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class IsFriendMessage {
     private boolean success;
-    private List<String> friend ;
+    private List<String> friends ;
 
     public boolean isSuccess() {
         return success;
@@ -23,13 +23,14 @@ public class IsFriendMessage {
         this.success = success;
     }
 
-    public List<String> getFriend() {
-        return friend;
+    public List<String> getFriends() {
+        return friends;
     }
 
-    public void setFriend(List<String> friend) {
-        this.friend = friend;
+    public void setFriends(List<String> friends) {
+        this.friends = friends;
     }
+
     
     
 }

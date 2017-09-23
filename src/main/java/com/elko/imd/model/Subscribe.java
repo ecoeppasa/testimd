@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import org.hibernate.validator.constraints.Email;
 
 /**
  *
@@ -20,8 +21,10 @@ public class Subscribe {
     
     
     @Id
+    @Email
     @Column(name = "requestor")
     private String requestor;
+    @Email
     @Column(name = "target")
     private String target;
     @Column(name = "status")

@@ -12,18 +12,20 @@ import java.util.List;
  * @author elko
  */
 public class IsFriend {
-    private List<String> friend;
+    private List<String> friends;
 
-    public List<String> getFriend() {
-        return friend;
+    public List<String> getFriends() {
+        return friends;
     }
 
-    public void setFriend(List<String> friend) {
-        this.friend = friend;
+    public void setFriends(List<String> friends) {
+        this.friends = friends;
     }
+
+    
 
     public boolean isEmpty(){
-    return friend == null;
+    return friends == null;
     }  
     
     
