@@ -48,7 +48,16 @@ public class UserDAOImpl implements UserDAO{
             n.setEmail(userTwo);
             user.add(u);
             user.add(n);
+       }else {
+             friend = session.createQuery("from Friendship where userOne=? and userTwo=? and status=2  ").setParameter(0, userTwo).setParameter(1, userOne).list();
+             if (!friend.isEmpty()){
+                u.setEmail(userOne);
+                n.setEmail(userTwo);
+                user.add(u);
+                user.add(n);
        }
+            
+        }
        return user;
     }
     @Transactional
