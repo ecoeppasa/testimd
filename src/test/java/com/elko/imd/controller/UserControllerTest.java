@@ -7,7 +7,6 @@ package com.elko.imd.controller;
 
 import com.elko.imd.ImdApplicationTests;
 import java.io.UnsupportedEncodingException;
-import java.util.Base64;
 import javax.servlet.Filter;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -46,7 +45,6 @@ public class UserControllerTest extends ImdApplicationTests{
         DefaultMockMvcBuilder builder = MockMvcBuilders.webAppContextSetup(this.wac);
         this.mockMvc = builder.build();
         
-        credetntial = Base64.getEncoder().encodeToString("user:123".getBytes("utf-8")); 
      
     }
     
