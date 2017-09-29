@@ -25,7 +25,16 @@ import org.springframework.validation.annotation.Validated;
 
 /**
  *
+ * UserDAOImpl class is the implementation of all abstract method of USerDAO interface class. 
+ * in this class all transactions are set in each method or function. First spring will do dependency injection for 
+ * SessionFactory class
+ * 
  * @author elko
+ * @since 2017-09-25
+ * @version 1.0
+ * @see <a href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-spring-beans-and-dependency-injection.html">Spring Beans and dependency injection </a>
+ * @see <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/stereotype/Service.html" >  Service </a>
+ * @see <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/transaction/annotation/Transactional.html" >Transactional</a>
  */
 @Service
 public class UserDAOImpl implements UserDAO{
@@ -33,6 +42,17 @@ public class UserDAOImpl implements UserDAO{
     @Autowired
     SessionFactory sessionFactory;
     
+    /**
+     * 
+     * @param userOne is the email of the first user to be compared, whether it has a relationship with other one email
+     * @param userTwo is the email of the second user to be compared, whether it has a relationship with other one email
+     * @return List of User
+     * 
+     * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a>
+     * @see <a href="https://docs.jboss.org/hibernate/orm/3.5/javadocs/org/hibernate/Session.html">Session </a>
+     * @see <a href="https://docs.jboss.org/hibernate/orm/3.3/reference/en/html/queryhql.html">Hibernate Query Language (HQL)</a>
+     * @see <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/transaction/annotation/Transactional.html" >Transactional</a>
+     */
     @Transactional
     @Override
     public List<User> IsFriend(String userOne,String userTwo) {
@@ -60,6 +80,17 @@ public class UserDAOImpl implements UserDAO{
         }
        return user;
     }
+    
+    /**
+     * 
+     * @param user is an email of users that want to get all the friends
+     * @return List of friendship 
+     * 
+     * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a>
+     * @see <a href="https://docs.jboss.org/hibernate/orm/3.5/javadocs/org/hibernate/Session.html">Session </a>
+     * @see <a href="https://docs.jboss.org/hibernate/orm/3.3/reference/en/html/queryhql.html">Hibernate Query Language (HQL)</a>
+     * @see <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/transaction/annotation/Transactional.html" >Transactional</a>
+     */
     @Transactional
     @Override
     public List<Friendship> getFriend(String user) {
@@ -70,6 +101,19 @@ public class UserDAOImpl implements UserDAO{
        return friend;
     }
     
+    
+    /**
+     * 
+     * 
+     * @param userAction is a raw input for subscribe method. This consists of a requestor email's and a target email's  
+     * @param status is represent of subscribe and unsubscribe, if status is 1 then the action is subscribe 
+     * @return boolean if the data successfully saved will returned true, but if the data fails to be stored will be returned false
+     * 
+     * @see <a href="https://docs.jboss.org/hibernate/core/3.3/api/org/hibernate/Session.html">Session </a>
+     * @see <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/transaction/annotation/Transactional.html" >Transactional</a>
+     * 
+     * @exception HibernateException
+     */
     @Transactional
     @Override
     public boolean subscribe(UserAction userAction,int status) {       
@@ -87,6 +131,16 @@ public class UserDAOImpl implements UserDAO{
        return true;
     }
 
+    /**
+     * 
+     * @param email is the user's email who want to get all the subscriber
+     * @return list of subscribers object
+     * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a>
+     * @see <a href="https://docs.jboss.org/hibernate/orm/3.5/javadocs/org/hibernate/Session.html">Session </a>
+     * @see <a href="https://docs.jboss.org/hibernate/orm/3.3/reference/en/html/queryhql.html">Hibernate Query Language (HQL)</a>
+     * @see <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/transaction/annotation/Transactional.html" >Transactional</a>
+     * 
+     */
     @Transactional
     @Override
     public List<Subscribe> getSubscribe(String email) {
@@ -98,6 +152,14 @@ public class UserDAOImpl implements UserDAO{
        return subscr;
     }
     
+    /**
+     * 
+     * @param newsFeed newsFeed is raw input in JSON format that filled by sender and text message to post as a update status
+     * @return boolean , if news feed successful to post then return true, else will returned false
+     * 
+     * @see <a href="https://docs.jboss.org/hibernate/orm/3.5/javadocs/org/hibernate/Session.html">Session </a>
+     * @see <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/transaction/annotation/Transactional.html" >Transactional</a>
+     */
     @Transactional
     @Override
     public boolean postNews(NewsFeed newsFeed) {
@@ -110,6 +172,14 @@ public class UserDAOImpl implements UserDAO{
        return true;
     }
 
+    /**
+     * 
+     * @param email is the user's email who want to get all the unsubscriber
+     * @return List of user's unsubscribers 
+     * 
+     * @see <a href="https://docs.jboss.org/hibernate/orm/3.5/javadocs/org/hibernate/Session.html">Session </a>
+     * @see <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/transaction/annotation/Transactional.html" >Transactional</a>
+     */
     @Override
     public List<Subscribe> getUnSubscribe(String email) {
          Session session;
