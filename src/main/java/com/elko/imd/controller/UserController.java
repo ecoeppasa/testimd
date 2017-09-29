@@ -37,9 +37,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- *
+ * UserController is class for control rest service 
+ * 
  * @author elko
+ * @see <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/RestController.html">RestController </a>
+ * @see <a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/bind/annotation/RequestMapping.html">RequestMapping </a>
+ * @see <a href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-spring-beans-and-dependency-injection.html">Spring Beans and dependency injection </a>
  */
+
 @RestController
 @RequestMapping("/api")
 @Validated
@@ -53,8 +58,24 @@ public class UserController {
      Validator validator;
     
     //-------------------Check is users are friend--------------------------------------------------------
+     
+     /**
+      *  
+      * 
+      * @param httpServletRequest  get request information of HTTP Servlets.
+      * @param json body of input message parameter
+      * @return <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/http/ResponseEntity.html">ResponseEntity</a>
+      * is meant to represent the entire HTTP response. You can control anything that goes into it: status code, headers, and body.
+      * In this method use Map as a body of response. 
+      * 
+      * @see <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServletRequest.html">HttpServletRequest</a>
+      * @see <a href="http://www.json.org/">JSON</a>
+      * @see <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/http/ResponseEntity.html">ResponseEntity</a>
+      * @see <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/RequestBody.html">RequestBody</a>
+      * @see <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/PostMapping.html">PostMapping</a>
+      */
         @PostMapping(value = "/isfriend/")
-	public ResponseEntity<Map >listAllUsers(HttpServletRequest httpServletRequest , @RequestBody String json) {
+	public ResponseEntity<Map >isFriend(HttpServletRequest httpServletRequest , @RequestBody String json) {
                 validator = new Validator();
                 Map<String,String> messageError = new HashMap<>();   
                 if (!validator.isJSONValid(json)) {
@@ -73,6 +94,21 @@ public class UserController {
                 
 	       return new ResponseEntity<Map>(message, HttpStatus.OK);
 	}
+        
+        /**
+         * 
+         * @param httpServletRequest  get request information of HTTP Servlets.
+         * @param json body of input message parameter
+         * @return <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/http/ResponseEntity.html">ResponseEntity</a>
+         * is meant to represent the entire HTTP response. You can control anything that goes into it: status code, headers, and body.
+         * In this method use GetFriend class as a body of response. 
+         * 
+         * @see <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServletRequest.html">HttpServletRequest</a>
+         * @see <a href="http://www.json.org/">JSON</a>
+         * @see <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/http/ResponseEntity.html">ResponseEntity</a>
+         * @see <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/RequestBody.html">RequestBody</a>
+         * @see <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/PostMapping.html">PostMapping</a>
+         */
         
          //-------------------Retrieve all friends--------------------------------------------------------
         @PostMapping(value = "/getfriend/")
@@ -121,7 +157,20 @@ public class UserController {
                 
 	       return new ResponseEntity<GetFriend>(friends, HttpStatus.OK);
 	}
-        
+         /**
+         * 
+         * @param httpServletRequest  get request information of HTTP Servlets.
+         * @param json body of input message parameter
+         * @return <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/http/ResponseEntity.html">ResponseEntity</a>
+         * is meant to represent the entire HTTP response. You can control anything that goes into it: status code, headers, and body.
+         * In this method use GetFriend class as a body of response. 
+         * 
+         * @see <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServletRequest.html">HttpServletRequest</a>
+         * @see <a href="http://www.json.org/">JSON</a>
+         * @see <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/http/ResponseEntity.html">ResponseEntity</a>
+         * @see <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/RequestBody.html">RequestBody</a>
+         * @see <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/PostMapping.html">PostMapping</a>
+         */
            //-------------------Retrieve all common between friends--------------------------------------------------------
         @PostMapping(value = "/getcommonfriend/")
 	public ResponseEntity<GetFriend >listCommon(HttpServletRequest httpServletRequest , @RequestBody String json) {
@@ -189,6 +238,20 @@ public class UserController {
 	       return new ResponseEntity<GetFriend>(friends, HttpStatus.OK);
 	}
         
+         /**
+         * 
+         * @param httpServletRequest  get request information of HTTP Servlets.
+         * @param json body of input message parameter
+         * @return <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/http/ResponseEntity.html">ResponseEntity</a>
+         * is meant to represent the entire HTTP response. You can control anything that goes into it: status code, headers, and body.
+         * In this method use Map as a body of response. 
+         * 
+         * @see <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServletRequest.html">HttpServletRequest</a>
+         * @see <a href="http://www.json.org/">JSON</a>
+         * @see <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/http/ResponseEntity.html">ResponseEntity</a>
+         * @see <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/RequestBody.html">RequestBody</a>
+         * @see <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/PostMapping.html">PostMapping</a>
+         */
         @PostMapping(value = "/subscribe/")
         public ResponseEntity<Map> subscribe(HttpServletRequest httpServletRequest , @RequestBody String json){
 
@@ -204,6 +267,20 @@ public class UserController {
 
         }
         
+         /**
+         * 
+         * @param httpServletRequest  get request information of HTTP Servlets.
+         * @param json body of input message parameter
+         * @return <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/http/ResponseEntity.html">ResponseEntity</a>
+         * is meant to represent the entire HTTP response. You can control anything that goes into it: status code, headers, and body.
+         * In this method use Map as a body of response. 
+         * 
+         * @see <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServletRequest.html">HttpServletRequest</a>
+         * @see <a href="http://www.json.org/">JSON</a>
+         * @see <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/http/ResponseEntity.html">ResponseEntity</a>
+         * @see <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/RequestBody.html">RequestBody</a>
+         * @see <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/PostMapping.html">PostMapping</a>
+         */
         @PostMapping(value = "/unsubscribe/")
         public ResponseEntity<Map> unsubscribe(HttpServletRequest httpServletRequest , @RequestBody String json){
 
@@ -219,6 +296,20 @@ public class UserController {
 
         }
         
+         /**
+         * 
+         * @param httpServletRequest  get request information of HTTP Servlets.
+         * @param json body of input message parameter
+         * @return <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/http/ResponseEntity.html">ResponseEntity</a>
+         * is meant to represent the entire HTTP response. You can control anything that goes into it: status code, headers, and body.
+         * In this method use NewsRecipient class as a body of response. 
+         * 
+         * @see <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServletRequest.html">HttpServletRequest</a>
+         * @see <a href="http://www.json.org/">JSON</a>
+         * @see <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/http/ResponseEntity.html">ResponseEntity</a>
+         * @see <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/RequestBody.html">RequestBody</a>
+         * @see <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/PostMapping.html">PostMapping</a>
+         */
         @PostMapping(value = "/newsposting/")
         public ResponseEntity<NewsRecipient> newsposting(HttpServletRequest httpServletRequest , @RequestBody String json){
 
