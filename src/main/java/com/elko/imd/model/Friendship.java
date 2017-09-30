@@ -13,7 +13,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
- * This is class model for table "Friendship" in database
+ * This is class model for table "Friendship" in database.
+ * This class uses annotations to mapping relational objects between class model and database
  * @author elko
  * @since 2017-09-25
  * 
@@ -40,42 +41,83 @@ public class Friendship {
     @Column(name = "action_by_user")
     private int actionBy;
 
+    /**
+     * this function for get "id" value in Friendship class
+     * @return value of id
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * this method for set id in class
+     * 
+     * @param id 
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     * This function for get value of userOne variable
+     * @return 
+     */
     public String getUserOne() {
         return userOne;
     }
 
+    /**
+     * This method is for set UserOne variable
+     * @param userOne is value of userOne variable that's want to be set
+     */
     public void setUserOne(String userOne) {
         this.userOne = userOne;
     }
 
+    /**
+     * This function is for get value of userTwo variable
+     * @return value of userTwo
+     */
     public String getUserTwo() {
         return userTwo;
     }
 
+    /**
+     * This method is for set userTwo variable
+     * @param userTwo  is value of userTwo variable
+     */
     public void setUserTwo(String userTwo) {
         this.userTwo = userTwo;
     }
 
+    /**
+     * getStatus is function for get status value
+     * @return int of status 
+     */
     public int getStatus() {
         return status;
     }
 
+    /**
+     * setStatus is method for set up status variable
+     * @param status 
+     */
     public void setStatus(int status) {
         this.status = status;
     }
 
+    /**
+     * getActionBy is function for get value of actionBy variable
+     * @return actionBy 
+     */
     public int getActionBy() {
         return actionBy;
     }
 
+    /**
+     * 
+     * @param actionBy is integer of id user 
+     */
     public void setActionBy(int actionBy) {
         this.actionBy = actionBy;
     }
