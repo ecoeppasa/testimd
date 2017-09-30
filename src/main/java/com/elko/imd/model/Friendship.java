@@ -13,8 +13,14 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
- *
+ * This is class model for table "Friendship" in database
  * @author elko
+ * @since 2017-09-25
+ * 
+ * @see <a href="https://docs.jboss.org/hibernate/stable/annotations/reference/en/html_single/">Hibernate Annotations </a>
+ * @see <a href="http://docs.oracle.com/javaee/6/tutorial/doc/bnbqa.html">Entity </a>
+ * @see <a href="https://docs.oracle.com/javaee/7/api/javax/persistence/Table.html">javax.persistence.Table </a>
+ * 
  */
 @Entity
 @Table(name = "friendship")
