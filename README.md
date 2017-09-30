@@ -9,7 +9,7 @@ password : 123
 
 1. As a	user, I need an API to create a friend connection between two email addresses.	
 ```
-URI : http://localhost:8080/api/isfriend/
+URI : http://localhost:8080/api/createfriend/
 Method : POST
 raw input : 
 {
