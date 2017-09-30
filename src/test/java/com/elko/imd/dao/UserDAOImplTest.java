@@ -7,6 +7,7 @@ package com.elko.imd.dao;
 
 import com.elko.imd.ImdApplicationTests;
 import com.elko.imd.configuration.AppConfig;
+import com.elko.imd.model.Friendship;
 import com.elko.imd.model.User;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,16 +35,15 @@ public class UserDAOImplTest extends ImdApplicationTests{
     
     @Test
     public void testIsFriend() {
-        System.out.println("IsFriend");
-        User u = new User();
-        User n = new User();
-        n.setEmail("andy@example.com");        
-        u.setEmail("john@example.com");
+        System.out.println("CreateFriends");
+        Friendship fs = new Friendship();
+        fs.setUserOne("john@example.com");
+        fs.setUserTwo("andy@example.com");
+        fs.setStatus(2);
+        fs.setActionBy(1);
         System.out.println("nr");
-        List<User> expResult = new ArrayList<>();
-        expResult.add(n);
-        expResult.add(u);
-        List<User> result = userDAO.IsFriend("john@example.com", "andy@example.com");
+        boolean expResult = true;
+        boolean result = userDAO.createFriend(fs);
         System.out.println("me");
         assertEquals(expResult, result);
         fail("The test case is a prototype.");
@@ -68,6 +68,10 @@ public class UserDAOImplTest extends ImdApplicationTests{
 
     @Test
     public void testGetUnSubscribe() {
+    }
+
+    @Test
+    public void testCreateFriend() {
     }
     
 }

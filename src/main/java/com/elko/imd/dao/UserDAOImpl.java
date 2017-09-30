@@ -43,9 +43,10 @@ public class UserDAOImpl implements UserDAO{
     SessionFactory sessionFactory;
     
     /**
+     * This function will create friendship between two email addresses.
+     * User input two email addresses and the function will create relation between them.
      * 
-     * @param userOne is the email of the first user to be compared, whether it has a relationship with other one email
-     * @param userTwo is the email of the second user to be compared, whether it has a relationship with other one email
+     * @param friendship object
      * @return List of User
      * 
      * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a>
@@ -53,35 +54,21 @@ public class UserDAOImpl implements UserDAO{
      * @see <a href="https://docs.jboss.org/hibernate/orm/3.3/reference/en/html/queryhql.html">Hibernate Query Language (HQL)</a>
      * @see <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/transaction/annotation/Transactional.html" >Transactional</a>
      */
-    @Transactional
+    
+    @Transactional    
     @Override
-    public List<User> IsFriend(String userOne,String userTwo) {
-       Session session;
-       session = sessionFactory.openSession();
-       List<Friendship> friend = new ArrayList<>();
-       friend = session.createQuery("from Friendship where userOne=? and userTwo=? and status=2  ").setParameter(0, userOne).setParameter(1, userTwo).list();
-       User u = new User();       
-       User n = new User();       
-       List<User> user = new ArrayList<User>();
-        if (!friend.isEmpty()){
-            u.setEmail(userOne);
-            n.setEmail(userTwo);
-            user.add(u);
-            user.add(n);
-       }else {
-             friend = session.createQuery("from Friendship where userOne=? and userTwo=? and status=2  ").setParameter(0, userTwo).setParameter(1, userOne).list();
-             if (!friend.isEmpty()){
-                u.setEmail(userOne);
-                n.setEmail(userTwo);
-                user.add(u);
-                user.add(n);
-       }
-            
+    public boolean createFriend(Friendship friendship) {
+         Session session = sessionFactory.getCurrentSession();
+        try {  
+        session.saveOrUpdate(friendship);
+        } catch (HibernateException r) {  
+            return false;
         }
-       return user;
+       return true;
     }
     
     /**
+     * This service will get all user's friend. 
      * 
      * @param user is an email of users that want to get all the friends
      * @return List of friendship 
@@ -103,7 +90,10 @@ public class UserDAOImpl implements UserDAO{
     
     
     /**
-     * 
+     * this service will inserting to subscribe table on database.
+     * raw input for this subscribe table is from UserAction class and action status,
+     * if user want to subscribe other user then status must be fill by 1 (one), 
+     * or user want to block update / unsubscribe other user then status must be fill be 0 (zero)
      * 
      * @param userAction is a raw input for subscribe method. This consists of a requestor email's and a target email's  
      * @param status is represent of subscribe and unsubscribe, if status is 1 then the action is subscribe 
@@ -133,6 +123,10 @@ public class UserDAOImpl implements UserDAO{
 
     /**
      * 
+     * This function is to get someone subscriber.
+     * This function need an email as an input parameter, then function will retrieve all the user's subscriber.
+     * If has subscriber the function will return list of subscriber.
+     * 
      * @param email is the user's email who want to get all the subscriber
      * @return list of subscribers object
      * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a>
@@ -153,6 +147,8 @@ public class UserDAOImpl implements UserDAO{
     }
     
     /**
+     * This service will post user update / news feed.
+     * The service need raw  input of news feed consisting of sender and text message. 
      * 
      * @param newsFeed newsFeed is raw input in JSON format that filled by sender and text message to post as a update status
      * @return boolean , if news feed successful to post then return true, else will returned false
@@ -173,7 +169,9 @@ public class UserDAOImpl implements UserDAO{
     }
 
     /**
-     * 
+     * This function is to get is the user's has an another user thats block update from the user.
+     * This function need an email as an input parameter, then function will retrieve all the user's unsubscriber.
+     * If has subscriber the function will return list of unsubscriber / blocking from the user's update.
      * @param email is the user's email who want to get all the unsubscriber
      * @return List of user's unsubscribers 
      * 
@@ -189,5 +187,5 @@ public class UserDAOImpl implements UserDAO{
        
        return subscr;
     }
-    
+
 }

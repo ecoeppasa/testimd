@@ -20,7 +20,9 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
  *
  
  * AppConfig is class for setting up configuration of application.
- * This class is responsible for organizing mapping classes, session management, security, database connections and transactions management 
+ * This class is responsible for organizing mapping classes, session management, security, database connections and transactions management.
+ * Annotating a class with the {@code @Configuration } indicates that the class can be used by the Spring IoC container as a source of bean definitions.
+ * The {@code @Bean} annotation tells Spring that a method annotated with {@code @Bean } will return an object that should be registered as a bean in the Spring application context.
  * 
  * 
  * @author elko 

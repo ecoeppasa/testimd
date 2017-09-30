@@ -37,7 +37,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * UserController is class for control rest service 
+ * UserController is class for control rest service.
+ * The {@code @RestController } annotation a specialized version of the controller which is a convenience annotation that 
+ * does nothing more than add the {@code @Controller  and @ResponseBody } annotations. By annotating the controller class with 
+ * {@code @RestController} annotation, you no longer need to add {@code @ResponseBody} to all the request mapping methods.
+ * The {@code @ResponseBody} annotation is active by default.
+ * The {@code @RequestMapping} annotation is used to map a URL to either an entire class or a particular handler method
  * 
  * @author elko
  * @see <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/RestController.html">RestController </a>
@@ -57,10 +62,21 @@ public class UserController {
     
      Validator validator;
     
-    //-------------------Check is users are friend--------------------------------------------------------
-     
      /**
-      *  
+      * This method will create relationship between two email addresses.
+      * Raw input for this method must be (example making john and andy be friend):
+      * <pre>
+      * <code>
+      * {
+             friends:
+                 [
+                 'andy@example.com',
+                 'john@example.com'
+                 ]
+         }
+      * </code>
+      * 
+      * </pre>
       * 
       * @param httpServletRequest  get request information of HTTP Servlets.
       * @param json body of input message parameter
@@ -74,8 +90,8 @@ public class UserController {
       * @see <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/RequestBody.html">RequestBody</a>
       * @see <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/PostMapping.html">PostMapping</a>
       */
-        @PostMapping(value = "/isfriend/")
-	public ResponseEntity<Map >isFriend(HttpServletRequest httpServletRequest , @RequestBody String json) {
+        @PostMapping(value = "/createfriend/")
+	public ResponseEntity<Map >createFriend(HttpServletRequest httpServletRequest , @RequestBody String json) {
                 validator = new Validator();
                 Map<String,String> messageError = new HashMap<>();   
                 if (!validator.isJSONValid(json)) {
@@ -84,18 +100,28 @@ public class UserController {
                 }
             
                 IsFriend friends = new Gson().fromJson(json, IsFriend.class);
-                List<User> list = userDAO.IsFriend(friends.getFriends().get(0).toString(),friends.getFriends().get(1).toString());
+                Friendship fs = new Friendship();
+                fs.setUserOne(friends.getFriends().get(0));
+                fs.setUserTwo(friends.getFriends().get(1));
+                fs.setStatus(2);
+                fs.setActionBy(1);
+                
+                
                 Map<String,Boolean> message = new HashMap<>();   
               
-                message.put("succes", Boolean.TRUE);
-                if(list.isEmpty()){
-                    message.put("succes", Boolean.FALSE);
-	        }
+               message.put("success", false);   
+                    if( userDAO.createFriend(fs)){
+                        message.clear();
+                        message.put("success", true);
+                    }
+
                 
 	       return new ResponseEntity<Map>(message, HttpStatus.OK);
 	}
         
         /**
+         * This method will retrieve the friends list for an email address.
+         * The method will get all email addresses that's be friend with the user.
          * 
          * @param httpServletRequest  get request information of HTTP Servlets.
          * @param json body of input message parameter
@@ -108,8 +134,7 @@ public class UserController {
          * @see <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/http/ResponseEntity.html">ResponseEntity</a>
          * @see <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/RequestBody.html">RequestBody</a>
          * @see <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/PostMapping.html">PostMapping</a>
-         */
-        
+         */        
          //-------------------Retrieve all friends--------------------------------------------------------
         @PostMapping(value = "/getfriend/")
 	public ResponseEntity<GetFriend >listFriend(HttpServletRequest httpServletRequest , @RequestBody String json) {
@@ -124,6 +149,7 @@ public class UserController {
                   friend.setCount(0);
                   return new ResponseEntity<GetFriend>(friend, HttpStatus.BAD_REQUEST);
                 }
+              
                 GetFriend friends = new GetFriend();
                 User user = new Gson().fromJson(json, User.class);
                  List<String> lString = new ArrayList<>();
@@ -158,6 +184,8 @@ public class UserController {
 	       return new ResponseEntity<GetFriend>(friends, HttpStatus.OK);
 	}
          /**
+         * This method will retrieve the common	friends	list between two email addresses.	
+         * The method will retrieve list of all common friends between two or more email addresses.
          * 
          * @param httpServletRequest  get request information of HTTP Servlets.
          * @param json body of input message parameter
@@ -239,6 +267,16 @@ public class UserController {
 	}
         
          /**
+         * This method will subscribe to updates from an email address.
+         * The raw input must be : 
+         * <pre>
+         * <code>
+         *  {
+         *   "requestor": "lisa@example.com",
+         *   "target": "john@example.com"
+         *  }
+         * </code>
+         * </pre>
          * 
          * @param httpServletRequest  get request information of HTTP Servlets.
          * @param json body of input message parameter
@@ -269,6 +307,17 @@ public class UserController {
         
          /**
          * 
+         *This method will block updates from an email address.	
+         * The raw input must be : 
+         * <pre>
+         * <code>
+         *  {
+         *   "requestor": "lisa@example.com",
+         *   "target": "john@example.com"
+         *  }
+         * </code>
+         * </pre>
+         * 
          * @param httpServletRequest  get request information of HTTP Servlets.
          * @param json body of input message parameter
          * @return <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/http/ResponseEntity.html">ResponseEntity</a>
@@ -297,6 +346,24 @@ public class UserController {
         }
         
          /**
+         * *This method will retrieve all email addresses that can receive updates from an email address.	
+         *  Eligibility for receiving updates from i.e. "john@example.com":	
+         *  has not blocked updates from "john@example.com", and	
+         *   at	least	one	of	the	following:	
+         *   <ul>
+         *   <li> has	a	friend	connection	with	"john@example.com"	</li>
+         *   <li> has	subscribed	to	updates	from	"john@example.com"	</li>
+         *   <li> has	been	@mentioned	in	the	update      </li>
+         *  </ul>
+         * The raw input must be : 
+         * <pre>
+         * <code>
+         *  {
+         *   "requestor": "lisa@example.com",
+         *   "target": "john@example.com"
+         *  }
+         * </code>
+         * </pre>
          * 
          * @param httpServletRequest  get request information of HTTP Servlets.
          * @param json body of input message parameter
