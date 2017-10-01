@@ -48,7 +48,7 @@ public class Subscribe {
 
     /**
      * Method for set value of Requestor variable
-     * @param requestor 
+     * @param requestor is email of subscriber user
      */
     public void setRequestor(String requestor) {
         this.requestor = requestor;

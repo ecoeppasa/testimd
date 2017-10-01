@@ -40,7 +40,7 @@ public class UserAction {
 
     /**
      * Method for set requestor of the action
-     * @param requestor 
+     * @param requestor is email of requestor 
      */
     public void setRequestor(String requestor) {
         this.requestor = requestor;
@@ -48,7 +48,7 @@ public class UserAction {
 
     /**
      * Function for get target of the action
-     * @return 
+     * @return target of action
      */
     public String getTarget() {
         return target;
@@ -56,7 +56,7 @@ public class UserAction {
 
     /**
      * Method for set target of the action 
-     * @param target 
+     * @param target target of action
      */
     public void setTarget(String target) {
         this.target = target;

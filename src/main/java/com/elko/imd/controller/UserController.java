@@ -73,9 +73,8 @@ public class UserController {
                  'andy@example.com',
                  'john@example.com'
                  ]
-         }
+        }
       * </code>
-      * 
       * </pre>
       * 
       * @param httpServletRequest  get request information of HTTP Servlets.
@@ -122,6 +121,14 @@ public class UserController {
         /**
          * This method will retrieve the friends list for an email address.
          * The method will get all email addresses that's be friend with the user.
+         *  Json input for this service must be :
+         * <pre>
+         * <code>
+         *   {
+         *      email: 'andy@example.com'
+         *   }
+         * </code>
+         * </pre> 
          * 
          * @param httpServletRequest  get request information of HTTP Servlets.
          * @param json body of input message parameter
@@ -187,6 +194,19 @@ public class UserController {
          * This method will retrieve the common	friends	list between two email addresses.	
          * The method will retrieve list of all common friends between two or more email addresses.
          * 
+         *  Json input for this service must be :
+         * <pre>
+         * <code>
+         *   {
+         *       friends:
+         *        [
+         *       'andy@example.com',
+         *       'john@example.com'
+         *       ]
+         *   }
+         * </code>
+         * </pre> 
+         *  
          * @param httpServletRequest  get request information of HTTP Servlets.
          * @param json body of input message parameter
          * @return <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/http/ResponseEntity.html">ResponseEntity</a>
@@ -359,8 +379,8 @@ public class UserController {
          * <pre>
          * <code>
          *  {
-         *   "requestor": "lisa@example.com",
-         *   "target": "john@example.com"
+         *       "sender": "john@example.com",
+         *       "text": "Hello World! kate@example.com"
          *  }
          * </code>
          * </pre>

@@ -21,14 +21,14 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
  * The exception handling in java is one of the powerful mechanism to handle the runtime errors so that normal flow of the application can be maintained.
  * There are mainly two types of exceptions: checked and unchecked where error is considered as unchecked exception. The sun microsystem says there are three types of exceptions:
  * 
- * <br> <h5>1. Checked Exception</h5>
- *      The classes that extend Throwable class except RuntimeException and Error are known as checked exceptions 
+ * <br> 1. Checked Exception
+ * <br>     The classes that extend Throwable class except RuntimeException and Error are known as checked exceptions 
  *      e.g.IOException, SQLException etc. Checked exceptions are checked at compile-time.
- * <br> <h5>2. Unchecked Exception</h5>
- *  The classes that extend RuntimeException are known as unchecked exceptions e.g. ArithmeticException, NullPointerException, ArrayIndexOutOfBoundsException etc. 
+ * <br> 2. Unchecked Exception
+ * <br> The classes that extend RuntimeException are known as unchecked exceptions e.g. ArithmeticException, NullPointerException, ArrayIndexOutOfBoundsException etc. 
  *      Unchecked exceptions are not checked at compile-time rather they are checked at runtime.
- * <br> <h5>3. Error </h5>
- *  Error is irrecoverable e.g. OutOfMemoryError, VirtualMachineError, AssertionError etc.
+ * <br> 3. Error 
+ * <br> Error is irrecoverable e.g. OutOfMemoryError, VirtualMachineError, AssertionError etc.
  * 
  * @author elko
  * @since '2017-09-25'

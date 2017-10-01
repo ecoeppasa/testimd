@@ -102,7 +102,6 @@ public class UserDAOImpl implements UserDAO{
      * @see <a href="https://docs.jboss.org/hibernate/core/3.3/api/org/hibernate/Session.html">Session </a>
      * @see <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/transaction/annotation/Transactional.html" >Transactional</a>
      * 
-     * @exception HibernateException
      */
     @Transactional
     @Override

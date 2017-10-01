@@ -52,7 +52,7 @@ public class Friendship {
     /**
      * this method for set id in class
      * 
-     * @param id 
+     * @param id is a key of Friendship table
      */
     public void setId(int id) {
         this.id = id;
@@ -60,7 +60,7 @@ public class Friendship {
 
     /**
      * This function for get value of userOne variable
-     * @return 
+     * @return email of userOne
      */
     public String getUserOne() {
         return userOne;
@@ -100,7 +100,7 @@ public class Friendship {
 
     /**
      * setStatus is method for set up status variable
-     * @param status 
+     * @param status is action of friendship
      */
     public void setStatus(int status) {
         this.status = status;

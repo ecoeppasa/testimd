@@ -35,9 +35,9 @@ public interface UserDAO {
      * This is abstract method for create friendship between two email addresses.
      * It's must be implement in implementation class.
      * 
-     * @param userOne is the email of the first user to be compared, whether it has a relationship with other one email
-     * @param userTwo is the email of the second user to be compared, whether it has a relationship with other one email
+     * @param friendship is user's email that's want to be friend 
      * @return List of User
+     * 
      * 
      * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a>
      * @see <a href="https://docs.jboss.org/hibernate/orm/3.5/javadocs/org/hibernate/Session.html">Session </a>
@@ -68,8 +68,6 @@ public interface UserDAO {
       * 
       * @see <a href="https://docs.jboss.org/hibernate/core/3.3/api/org/hibernate/Session.html">Session </a>
       * @see <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/transaction/annotation/Transactional.html" >Transactional</a>
-      * 
-      * @exception HibernateException
       */
     public boolean subscribe(@Valid UserAction userAction,int status);
     /**
